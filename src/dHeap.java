@@ -1,6 +1,6 @@
 /*
- * Name: TODO
- * PID:  TODO
+ * Name: Mia Jerphagnon
+ * PID:  A16821297
  */
 
 import java.util.Arrays;
@@ -9,8 +9,8 @@ import java.util.NoSuchElementException;
 /**
  * Title: dHeap Description: This program creates a Heap with d branching factor
  *
- * @author TODO
- * @since TODO
+ * @author Mia Jerphagnon
+ * @since November 29, 2023
  *
  * @param <T> the type of elements held in this collection
  */
@@ -27,7 +27,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
      */
     @SuppressWarnings("unchecked")
     public dHeap() {
-        // TODO
+        this(10, 2, true);
     }
 
     /**
@@ -37,7 +37,8 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
      */
     @SuppressWarnings("unchecked")
     public dHeap(int heapSize) {
-        // TODO
+        this(heapSize, 2, true);
+
     }
 
     /**
@@ -51,18 +52,21 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
      */
     @SuppressWarnings("unchecked")
     public dHeap(int d, int heapSize, boolean isMaxHeap) throws IllegalArgumentException {
-        // TODO
+        if (d<1) {throw new IllegalArgumentException();}
+        heap = (T[]) new Comparable[heapSize];
+        this.d = d;
+        this.isMaxHeap = isMaxHeap;
+        nelems= 0;
     }
 
     @Override
     public int size() {
-        // TODO
-        return 0;
+        return nelems;
     }
 
     @Override
     public T remove() throws NoSuchElementException {
-        // TODO
+
         return null;
     }
 
