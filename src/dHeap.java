@@ -153,7 +153,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
             //else {return 1;}
         //}
         //return 0;
-        return isMaxHeap ? x.compareTo(y) : y.compareTo(b);
+        return isMaxHeap ? x.compareTo(y) : y.compareTo(x);
     }
 
     private int indexOfMaxOrMinChild(int j){
