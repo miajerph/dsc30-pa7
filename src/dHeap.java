@@ -163,7 +163,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     private int indexOfMaxOrMinChild(int j){
         int indexOfMaxOrMin = j;
-        for (int i = d*j+2; i<=d*j+d; i++) {
+        for (int i = d*j+1; i<=d*j+d; i++) {
             if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
                 indexOfMaxOrMin = i;
             }
