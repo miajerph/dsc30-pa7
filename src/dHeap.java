@@ -141,18 +141,19 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private int compare(T x, T y) {
-        Integer elem1 = (Integer) x;
-        Integer elem2 = (Integer) y;
-        if (elem1 == elem2) {return 0;}
-        if (elem1 > elem2) {
-            if (isMaxHeap) {return 1;}
-            else {return -1;}
-        }
-        if (elem1 < elem2) {
-            if (isMaxHeap) {return -1;}
-            else {return 1;}
-        }
-        return 0;
+        //Integer elem1 = (Integer) x;
+        //Integer elem2 = (Integer) y;
+        //if (elem1 == elem2) {return 0;}
+        //if (elem1 > elem2) {
+            //if (isMaxHeap) {return 1;}
+            //else {return -1;}
+        //}
+        //if (elem1 < elem2) {
+            //if (isMaxHeap) {return -1;}
+            //else {return 1;}
+        //}
+        //return 0;
+        return isMaxHeap ? x.compareTo(y) : y.compareTo(b);
     }
 
     private int indexOfMaxOrMinChild(int j){
