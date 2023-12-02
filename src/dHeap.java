@@ -21,7 +21,6 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     private int d;      // branching factor
     private int nelems; // number of elements
     private boolean isMaxHeap; // indicates whether heap is max or min
-
     private int heapSize; //capacity of heap array
 
     /**
@@ -162,8 +161,8 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private int indexOfMaxOrMinChild(int j){
-        int indexOfMaxOrMin = j;
-        for (int i = d*j+1; i<=d*j+d; i++) {
+        int indexOfMaxOrMin = d*j+1;
+        for (int i = d*j+2; i<=d*j+d; i++) {
             if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
                 indexOfMaxOrMin = i;
             }
