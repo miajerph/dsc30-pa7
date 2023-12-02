@@ -1,17 +1,18 @@
 /*
- * Name: TODO
- * PID:  TODO
+ * Name: Mia Jerphagnon
+ * PID:  A16821297
  */
 
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.zip.GZIPInputStream;
+import static java.util.Arrays.sort;
 
 /**
  * Implementation of KNN using MyPriorityQueue on the MNIST dataset
  *
- * @author TODO
- * @since TODO
+ * @author Mia Jerphagnon
+ * @since A16821297
  */
 
 public class MNIST {
@@ -58,8 +59,6 @@ public class MNIST {
          */
         @Override
         public int compareTo(DataHolder d) {
-            // TODO
-            return 0;
         }
     }
 
@@ -70,8 +69,12 @@ public class MNIST {
      * @return the Euclidean distance between img1 and img2
      */
     public static float totalDist(float[] img1, float[] img2) throws IllegalArgumentException {
-        // TODO
-        return 0f;
+        if (img1.length != img2.length) {throw new IllegalArgumentException();}
+        float sumSquareDifferences = 0;
+        for (int i=0; i<img1.length; i++) {
+            sumSquareDifferences += (float) Math.pow(img1[i] + img2[i], 2);
+        }
+        return (float) Math.sqrt(sumSquareDifferences);
     }
 
     /**
@@ -81,8 +84,16 @@ public class MNIST {
      * @return an array of DataHolders containing the k closest neighbors to image
      */
     public static DataHolder[] getClosestMatches(float[] image, int k) {
-        // TODO
-        return null;
+        MyPriorityQueue<DataHolder> priorityQueue = new MyPriorityQueue<>(k);
+        for (int i=0; i<NUM_TRAIN; i++) {
+            float distance = totalDist(image, TRAIN_IMAGES[i]);
+            priorityQueue.offer(new DataHolder(TRAIN_LABELS[i], distance, TRAIN_IMAGES[i]));
+        }
+        DataHolder[] closestMatches = new DataHolder[k];
+        for (int i=0; i<k; i++) {
+            closestMatches[i] = priorityQueue.poll();
+        }
+        return closestMatches;
     }
 
     /**
@@ -92,8 +103,19 @@ public class MNIST {
      * @param closestMatches the array of DataHolders containing the k closest matches
      */
     public static int predict(DataHolder[] closestMatches) {
-        // TODO
-        return 0;
+        int[] uniqueLabels = new int[10];
+        for (DataHolder dataHolder : closestMatches) {
+            uniqueLabels[dataHolder.label]++;
+        }
+        int highestCount = 0;
+        int mostPopularMatch = 0;
+        for (int i = 0; i < 10; i++) {
+            if (uniqueLabels[i] > highestCount) {
+                highestCount = uniqueLabels[i];
+                mostPopularMatch = i;
+            }
+        }
+        return mostPopularMatch;
     }
 
     // you can ignore the rest of this file :)

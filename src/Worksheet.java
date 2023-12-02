@@ -41,8 +41,8 @@ public class Worksheet {
         TODO: store 3-ary heap's array representation output[0] and store 4-ary representation in output[1]
          */
         int[][] output = new int[2][11];
-        output[0] = new int[]{92, 53, 90, 30, 12, 25, 50, 24, 75, 33, 2};
-        output[1] = new int[]{92, 90, 34, 30, 25, 12, 53, 50, 33, 2};
+        output[0] = new int[]{92, 53, 90, 30, 12, 25, 50, 34, 75, 33, 2};
+        output[1] = new int[]{92, 90, 34, 30, 25, 12, 50, 53, 75, 33, 2};
         return output;
     }
 
@@ -55,7 +55,7 @@ public class Worksheet {
         TODO: store heap's array status after multiples operations - operation i will be stored at index i-1
          */
         int[][] output = new int[5][12];
-        output[0] = new int[]{58, 42, 53, 19, 27, 41, 12, 9, 12, 0, 0 ,0};
+        output[0] = new int[]{58, 42, 53, 19, 27, 41, 12, 9, 12, 0, 0, 0};
         output[1] = new int[]{90, 42, 53, 58, 27, 41, 12, 9, 12, 10, 19, 0};
         output[2] = new int[]{58, 42, 53, 19, 27, 41, 12, 9, 12, 10, 0, 0};
         output[3] = new int[]{83, 42, 53, 67, 27, 41, 12, 9, 12, 10, 19, 58};

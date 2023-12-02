@@ -22,6 +22,8 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     private int nelems; // number of elements
     private boolean isMaxHeap; // indicates whether heap is max or min
 
+    private int heapSize; //capacity of heap array
+
     /**
      * Initializes a binary max heap with capacity = 10
      */
@@ -57,6 +59,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         this.d = d;
         this.isMaxHeap = isMaxHeap;
         nelems= 0;
+        this.heapSize = heapSize;
     }
 
     @Override
@@ -66,43 +69,103 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     @Override
     public T remove() throws NoSuchElementException {
-
-        return null;
+        if (nelems==0) {throw new NoSuchElementException();}
+        T root = heap[0];
+        heap[0] = heap[nelems-1];
+        nelems--;
+        if (nelems > 0) {trickleDown(0);}
+        return root;
     }
 
     @Override
     public void add(T item) throws NullPointerException {
-        // TODO
+        if (item == null) {throw new NullPointerException();}
+        if (nelems == heap.length) {
+            resize();
+        }
+        heap[nelems] = item;
+        bubbleUp(nelems);
+        nelems++;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void clear() {
-        // TODO
+        heap = (T[]) new Comparable[heapSize];
+        nelems = 0;
+
     }
 
     @Override
     public T element() throws NoSuchElementException {
-        // TODO
-        return null;
+        if (nelems==0) {throw new NoSuchElementException();}
+        return heap[0];
     }
 
-    private int parent(int index) {
-        // TODO
-        return 0;
+    private int parent(int j) {
+        return (j-1)/d;
     }
 
     private void bubbleUp(int index) {
-        // TODO
+        int parentIndex = parent(index);
+        while (index > 0 && compare(heap[index], heap[parentIndex]) == 1) {
+            swap(index, parentIndex);
+            index = parentIndex;
+            parentIndex = parent(index);
+        }
     }
 
     private void trickleDown(int index) {
-        // TODO
+        int child = indexOfMaxOrMinChild(index);
+        while (child < nelems && compare(heap[index], heap[child]) == -1) {
+                swap(index, child);
+                index = child;
+                child = indexOfMaxOrMinChild(index);
+        }
+
     }
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        // TODO
+        T[] oldHeap = heap;
+        heap = (T[]) new Comparable[nelems*2];
+        for (int i=0; i<nelems; i++) {
+            heap[i] = oldHeap[i];
+        }
+        heapSize = nelems*2;
+    }
+    private void swap(int x, int y) {
+        T temp = heap[x];
+        heap[x] = heap[y];
+        heap[y] = temp;
+    }
+
+    private int compare(T x, T y) {
+        Integer elem1 = (Integer) x;
+        Integer elem2 = (Integer) y;
+        if (elem1 == elem2) {return 0;}
+        if (elem1 > elem2) {
+            if (isMaxHeap) {return 1;}
+            else {return -1;}
+        }
+        if (elem1 < elem2) {
+            if (isMaxHeap) {return -1;}
+            else {return 1;}
+        }
+        return 0;
+    }
+
+    private int indexOfMaxOrMinChild(int j){
+        int indexOfMaxOrMin = j;
+        for (int i = d*j+2; i<=d*j+d; i++) {
+            if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) == 1) {
+                indexOfMaxOrMin = i;
+            }
+            if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) == -1) {
+                indexOfMaxOrMin = i;
+            }
+        }
+        return indexOfMaxOrMin;
     }
 
 }
