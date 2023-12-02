@@ -116,7 +116,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     private void trickleDown(int index) {
         int child = indexOfMaxOrMinChild(index);
-        while (child < nelems && compare(heap[index], heap[child]) < 0) {
+        while (!isLeaf(child) && compare(heap[index], heap[child]) < 0) {
                 swap(index, child);
                 index = child;
                 child = indexOfMaxOrMinChild(index);
@@ -124,6 +124,12 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     }
 
+    private boolean isLeaf(int index) {
+        if (index > (nelems / d) && index <= nelems) {
+            return true;
+        }
+        return false;
+    }
     @SuppressWarnings("unchecked")
     private void resize() {
         T[] oldHeap = heap;
