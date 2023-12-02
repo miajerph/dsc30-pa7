@@ -73,14 +73,14 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         T root = heap[0];
         heap[0] = heap[nelems-1];
         nelems--;
-        if (nelems > 0) {trickleDown(0);}
+        if (nelems>0) {trickleDown(0);}
         return root;
     }
 
     @Override
     public void add(T item) throws NullPointerException {
-        if (item == null) {throw new NullPointerException();}
-        if (nelems == heap.length) {
+        if (item==null) {throw new NullPointerException();}
+        if (nelems==heap.length) {
             resize();
         }
         heap[nelems] = item;
@@ -108,7 +108,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     private void bubbleUp(int index) {
         int parentIndex = parent(index);
-        while (index > 0 && compare(heap[index], heap[parentIndex]) == 1) {
+        while (index > 0 && compare(heap[index], heap[parentIndex]) > 0) {
             swap(index, parentIndex);
             index = parentIndex;
             parentIndex = parent(index);
@@ -117,7 +117,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     private void trickleDown(int index) {
         int child = indexOfMaxOrMinChild(index);
-        while (child < nelems && compare(heap[index], heap[child]) == -1) {
+        while (child < nelems && compare(heap[index], heap[child]) < 0) {
                 swap(index, child);
                 index = child;
                 child = indexOfMaxOrMinChild(index);
@@ -164,10 +164,10 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     private int indexOfMaxOrMinChild(int j){
         int indexOfMaxOrMin = j;
         for (int i = d*j+2; i<=d*j+d; i++) {
-            if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) == 1) {
+            if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
                 indexOfMaxOrMin = i;
             }
-            if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) == -1) {
+            if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) < 0) {
                 indexOfMaxOrMin = i;
             }
         }
