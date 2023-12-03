@@ -66,8 +66,7 @@ class dHeapTester {
         assertEquals(8, testHeap.remove());
         assertEquals(9, testHeap.remove());
         assertThrows(NullPointerException.class, ()-> {
-            T nullElem = null;
-            testHeap.add(nullElem);
+            testHeap.add(null);
         });
     }
 
