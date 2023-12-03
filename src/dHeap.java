@@ -28,7 +28,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
      */
     @SuppressWarnings("unchecked")
     public dHeap() {
-        this(10, 2, true);
+        this(2, 10, true);
     }
 
     /**
@@ -38,7 +38,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
      */
     @SuppressWarnings("unchecked")
     public dHeap(int heapSize) {
-        this(heapSize, 2, true);
+        this(2, heapSize, true);
 
     }
 
