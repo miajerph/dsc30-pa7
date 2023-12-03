@@ -17,11 +17,11 @@ import java.util.NoSuchElementException;
 
 public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> {
 
-    public T[] heap;   // backing array
-    public int d;      // branching factor
-    public int nelems; // number of elements
-    public boolean isMaxHeap; // indicates whether heap is max or min
-    public int heapSize; //capacity of heap array
+    private T[] heap;   // backing array
+    private int d;      // branching factor
+    private int nelems; // number of elements
+    private boolean isMaxHeap; // indicates whether heap is max or min
+    private int heapSize; //capacity of heap array
 
     /**
      * Initializes a binary max heap with capacity = 10
@@ -61,11 +61,21 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         this.heapSize = heapSize;
     }
 
+    /**
+     * Returns the size of the heap
+     * @return the number of elements in heap
+     */
     @Override
     public int size() {
         return nelems;
     }
 
+    /**
+     * Removes and returns the top of the heap
+     *
+     * @return the top of the heap, max in max-heap, min in min-heap
+     * @throws NoSuchElementException
+     */
     @Override
     public T remove() throws NoSuchElementException {
         if (nelems==0) {throw new NoSuchElementException();}
@@ -76,6 +86,12 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         return root;
     }
 
+    /**
+     * Inserts an element into the heap
+     *
+     * @param item The element to add.
+     * @throws NullPointerException
+     */
     @Override
     public void add(T item) throws NullPointerException {
         if (item==null) {throw new NullPointerException();}
@@ -85,6 +101,9 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         nelems++;
     }
 
+    /**
+     * Clears and empties the heap
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void clear() {
@@ -93,16 +112,32 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
 
     }
 
+    /**
+     * Peeks the top of the heap
+     *
+     * @return the top of the heap
+     * @throws NoSuchElementException
+     */
     @Override
     public T element() throws NoSuchElementException {
         if (nelems==0) {throw new NoSuchElementException();}
         return heap[0];
     }
 
+    /**
+     * Gets the index of the parent
+     * @param j the current index of the child
+     * @return integer index
+     */
     private int parent(int j) {
         return (j-1)/d;
     }
 
+    /**
+     * helper function to bubble up
+     *
+     * @param index to start from
+     */
     private void bubbleUp(int index) {
         //if (index > 0) {
             //int parentIndex = parent(index);
@@ -118,6 +153,11 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         }
     }
 
+    /**
+     * trickle down helper function
+     *
+     * @param index to start from
+     */
     private void trickleDown(int index) {
         //if (!isLeaf(index)) {
             //int child = indexOfMaxOrMinChild(index);
@@ -148,6 +188,10 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         //
         //return false;
     //}
+
+    /**
+     * resizes the heap once it reaches capacity
+     */
     @SuppressWarnings("unchecked")
     private void resize(){
         T[] tempHeap = (T[]) new Comparable[heap.length*2];
@@ -157,12 +201,24 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         heapSize = heap.length*2;
         heap = tempHeap;
     }
+
+    /**
+     * swaps the position of two elements in the heap
+     * @param x index of first element
+     * @param y index of second element
+     */
     private void swap(int x, int y) {
         T temp = heap[x];
         heap[x] = heap[y];
         heap[y] = temp;
     }
 
+    /**
+     * compares two elements, returns opposite integers for min heap
+     * @param a first element
+     * @param b second element
+     * @return integer 0, -1, or 1
+     */
     private int compare(T a, T b) {
         if (isMaxHeap) {
             return a.compareTo(b);
@@ -172,6 +228,12 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         }
     }
 
+    /**
+     * finds the greatest or smallest child to help with trickle down
+     *
+     * @param index of parent
+     * @return the integer position of child
+     */
     private int indexOfMaxOrMinChild(int index){
         //int indexOfMaxOrMin = d*j+1;
         //for (int i = d*j+2; i<=d*j+d; i++) {
@@ -197,6 +259,13 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         //}
     }
 
+    /**
+     * formula for the kth child of a parent node
+     *
+     * @param index the parent node
+     * @param k child position within d
+     * @return position of child in heap
+     */
     private int kChild(int index, int k) {
         return d*index + k;
     }
