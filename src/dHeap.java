@@ -54,10 +54,10 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     @SuppressWarnings("unchecked")
     public dHeap(int d, int heapSize, boolean isMaxHeap) throws IllegalArgumentException {
         if (d<1) {throw new IllegalArgumentException();}
-        heap = (T[]) new Comparable[heapSize];
+        this.heap = (T[]) new Comparable[heapSize];
         this.d = d;
         this.isMaxHeap = isMaxHeap;
-        nelems= 0;
+        this.nelems= 0;
         this.heapSize = heapSize;
     }
 
@@ -137,24 +137,25 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
             else {
                 break;
             }
+            index = child;
         }
         heap[index] = temp;
     }
 
-    private boolean isLeaf(int index) {
-        if (index > (nelems / d) && index < nelems) {
-            return true;
-        }
-        return false;
-    }
+    //private boolean isLeaf(int index) {
+        //if (index > (nelems / d) && index < nelems) {
+            //return true;
+        //
+        //return false;
+    //}
     @SuppressWarnings("unchecked")
     private void resize(){
-        T[] oldHeap = heap;
-        heap = (T[]) new Comparable[nelems*2];
-        for (int i=0; i<nelems; i++) {
-            heap[i] = oldHeap[i];
+        T[] tempHeap = (T[]) new Comparable[heap.length*2];
+        for (int i=0; i<heap.length; i++) {
+            tempHeap[i] = heap[i];
         }
-        heapSize = nelems*2;
+        heapSize = heap.length*2;
+        heap = tempHeap;
     }
     private void swap(int x, int y) {
         T temp = heap[x];
@@ -171,7 +172,7 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         }
     }
 
-    private int indexOfMaxOrMinChild(int j){
+    private int indexOfMaxOrMinChild(int index){
         //int indexOfMaxOrMin = d*j+1;
         //for (int i = d*j+2; i<=d*j+d; i++) {
             //if (compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
@@ -182,15 +183,15 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
             //}
         //return indexOfMaxOrMin;
 
-        int maxOrMin = kChild(j, 1);
+        int maxOrMin = kChild(index, 1);
         int k=2;
-        int childCompare = kChild(j, k);
-        while (k<=d && childCompare<nelems) {
+        int childCompare = kChild(index, k);
+        while ((k<=d) && (childCompare<nelems)) {
             if (compare(heap[childCompare], heap[maxOrMin]) > 0) {
                 maxOrMin = childCompare;
             }
             k++;
-            childCompare = kChild(j, k);
+            childCompare = kChild(index, k);
         }
         return maxOrMin;
         //}
