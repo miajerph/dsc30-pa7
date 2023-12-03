@@ -72,16 +72,14 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         T root = heap[0];
         heap[0] = heap[nelems-1];
         nelems--;
-        if (nelems>0) {trickleDown(0);}
+        trickleDown(0);
         return root;
     }
 
     @Override
     public void add(T item) throws NullPointerException {
         if (item==null) {throw new NullPointerException();}
-        if (nelems==heap.length) {
-            resize();
-        }
+        if (nelems==heap.length) {resize();}
         heap[nelems] = item;
         bubbleUp(nelems);
         nelems++;
@@ -106,32 +104,35 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private void bubbleUp(int index) {
-        int parentIndex = parent(index);
-        while (index > 0 && compare(heap[index], heap[parentIndex]) > 0) {
-            swap(index, parentIndex);
-            index = parentIndex;
-            parentIndex = parent(index);
+        if (index > 0) {
+            int parentIndex = parent(index);
+            if (compare(heap[index], heap[parentIndex]) > 0) {
+                swap(index, parentIndex);
+                index = parentIndex;
+                bubbleUp(index);
+            }
         }
     }
 
     private void trickleDown(int index) {
-        int child = indexOfMaxOrMinChild(index);
-        while (!isLeaf(child) && compare(heap[index], heap[child]) < 0) {
+        if (!isLeaf(index)) {
+            int child = indexOfMaxOrMinChild(index);
+            if (compare(heap[index], heap[child]) < 0) {
                 swap(index, child);
                 index = child;
-                child = indexOfMaxOrMinChild(index);
+                trickleDown(index);
+            }
         }
-
     }
 
     private boolean isLeaf(int index) {
-        if (index > (nelems / d) && index <= nelems) {
+        if (index > (nelems / d) && index < nelems) {
             return true;
         }
         return false;
     }
     @SuppressWarnings("unchecked")
-    private void resize() {
+    private void resize(){
         T[] oldHeap = heap;
         heap = (T[]) new Comparable[nelems*2];
         for (int i=0; i<nelems; i++) {
@@ -146,24 +147,12 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private int compare(T x, T y) {
-        //if (x == y) {return 0;}
-        //if (x > y) {
-            //if (isMaxHeap) {return 1;}
-            //else {return -1;}
-       //}
-        //if (x < y) {
-            //if (isMaxHeap) {return -1;}
-            //else {return 1;}
-        //}
-        //return 0;
-        //return isMaxHeap ? x.compareTo(y) : y.compareTo(x);
         if (isMaxHeap) {
             return x.compareTo(y);
         }
         else {
-            y.compareTo(x);
+            return y.compareTo(x);
         }
-        return 0;
     }
 
     private int indexOfMaxOrMinChild(int j){
