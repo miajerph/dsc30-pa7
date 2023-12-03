@@ -17,11 +17,11 @@ import java.util.NoSuchElementException;
 
 public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> {
 
-    private T[] heap;   // backing array
-    private int d;      // branching factor
-    private int nelems; // number of elements
-    private boolean isMaxHeap; // indicates whether heap is max or min
-    private int heapSize; //capacity of heap array
+    public T[] heap;   // backing array
+    public int d;      // branching factor
+    public int nelems; // number of elements
+    public boolean isMaxHeap; // indicates whether heap is max or min
+    public int heapSize; //capacity of heap array
 
     /**
      * Initializes a binary max heap with capacity = 10
