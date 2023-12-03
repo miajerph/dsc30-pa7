@@ -49,9 +49,9 @@ class dHeapTester {
         testHeap.add(4);
         testHeap.add(2);
         testHeap.add(5);
-        assertEquals((T)5, testHeap.remove());
-        assertEquals((T)4, testHeap.remove());
-        asserEquals((T) 2, testHeap.remove());
+        assertEquals((T) 5, testHeap.remove());
+        assertEquals((T) 4, testHeap.remove());
+        assertEquals((T) 2, testHeap.remove());
         assertThrows(NoSuchElementException.class, ()-> {
             testHeap.remove();
         });
@@ -62,10 +62,13 @@ class dHeapTester {
         testHeap.add(8);
         testHeap.add(5);
         testHeap.add(9);
-        assertEquals((T<>)5, testHeap.remove());
-        assertEquals((T<>)8, testHeap.remove());
-        assertEquals((T<>)9, testHeap.remove());
-
+        assertEquals((T) 5, testHeap.remove());
+        assertEquals((T) 8, testHeap.remove());
+        assertEquals((T) 9, testHeap.remove());
+        assertThrows(NullPointerException.class, ()-> {
+            T nullElem = null;
+            testHeap.add(nullElem);
+        });
     }
 
     @Test
@@ -83,5 +86,16 @@ class dHeapTester {
     @Test
     public void elementTest() {
         dHeap testHeap = new dHeap(3, 15, true);
+        assertThrows(NoSuchElementException.class, ()-> {
+            testHeap.element();
+        });
+        testHeap.add(3);
+        testHeap.add(5);
+        testHeap.add(6);
+        assertEquals((T) 6, testHeap.element());
+        testHeap.remove();
+        assertEquals((T) 5, testHeap.element());
+        testHeap.remove();
+        assertEquals((T) 3, testHeap.element());
     }
 }

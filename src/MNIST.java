@@ -59,6 +59,7 @@ public class MNIST {
          */
         @Override
         public int compareTo(DataHolder d) {
+            return Float.compare(this.priority, d.priority);
         }
     }
 
