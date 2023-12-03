@@ -104,25 +104,41 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private void bubbleUp(int index) {
-        if (index > 0) {
-            int parentIndex = parent(index);
-            if (compare(heap[index], heap[parentIndex]) > 0) {
-                swap(index, parentIndex);
-                index = parentIndex;
-                bubbleUp(index);
-            }
+        //if (index > 0) {
+            //int parentIndex = parent(index);
+            //if (compare(heap[index], heap[parentIndex]) > 0) {
+                //swap(index, parentIndex);
+                //index = parentIndex;
+                //bubbleUp(index);
+            //}
+        //}
+        while (index>0 && compare(heap[index], heap[parent(index)]) > 0) {
+            swap(index, parent(index));
+            index = parent(index);
         }
     }
 
     private void trickleDown(int index) {
-        if (!isLeaf(index)) {
-            int child = indexOfMaxOrMinChild(index);
-            if (compare(heap[index], heap[child]) < 0) {
-                swap(index, child);
-                index = child;
-                trickleDown(index);
+        //if (!isLeaf(index)) {
+            //int child = indexOfMaxOrMinChild(index);
+            //if (compare(heap[index], heap[child]) < 0) {
+                //swap(index, child);
+                //index = child;
+                //trickleDown(index);
+            //}
+        int child ;
+        T temp = heap[index];
+        while (kChild(index, 1) < nelems) {
+            child = indexOfMaxOrMinChild(index);
+            if (compare(temp, heap[child]) <0) {
+                heap[index] = heap[child];
+            }
+            else {
+                break;
             }
         }
+        heap[index] = temp;
+        //}
     }
 
     private boolean isLeaf(int index) {
@@ -146,26 +162,33 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
         heap[y] = temp;
     }
 
-    private int compare(T x, T y) {
+    private int compare(T a, T b) {
         if (isMaxHeap) {
-            return x.compareTo(y);
+            return a.compareTo(b);
         }
         else {
-            return y.compareTo(x);
+            return b.compareTo(a);
         }
     }
 
     private int indexOfMaxOrMinChild(int j){
         int indexOfMaxOrMin = d*j+1;
         for (int i = d*j+2; i<=d*j+d; i++) {
-            if (isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
+            if (compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
                 indexOfMaxOrMin = i;
             }
-            if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) < 0) {
-                indexOfMaxOrMin = i;
-            }
+            //if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) < 0) {
+                //indexOfMaxOrMin = i;
+            //}
         }
         return indexOfMaxOrMin;
+
+        //int maxOrMin = kChild(index, 1);
+        //int k=2;
+        //int childCompare = kChild(index, k);
+        //while (k<=d && childCompare<nelems) {
+            //if (compare )
+        //}
     }
 
 }
