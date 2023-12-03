@@ -119,15 +119,15 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private void trickleDown(int index) {
-        if (!isLeaf(index)) {
-            int child = indexOfMaxOrMinChild(index);
-            if (compare(heap[index], heap[child]) < 0) {
-                swap(index, child);
-                index = child;
-                trickleDown(index);
-            }
-        }
-        /** int child ;
+        //if (!isLeaf(index)) {
+            //int child = indexOfMaxOrMinChild(index);
+            //if (compare(heap[index], heap[child]) < 0) {
+                //swap(index, child);
+                //index = child;
+                //trickleDown(index);
+            //}
+        //}
+        int child ;
         T temp = heap[index];
         while (kChild(index, 1) < nelems) {
             child = indexOfMaxOrMinChild(index);
@@ -139,7 +139,6 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
             }
         }
         heap[index] = temp;
-         */
     }
 
     private boolean isLeaf(int index) {
@@ -173,23 +172,33 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     }
 
     private int indexOfMaxOrMinChild(int j){
-        int indexOfMaxOrMin = d*j+1;
-        for (int i = d*j+2; i<=d*j+d; i++) {
-            if (compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
-                indexOfMaxOrMin = i;
-            }
+        //int indexOfMaxOrMin = d*j+1;
+        //for (int i = d*j+2; i<=d*j+d; i++) {
+            //if (compare(heap[i], heap[indexOfMaxOrMin]) > 0) {
+                //indexOfMaxOrMin = i;
+            //}
             //if (!isMaxHeap && compare(heap[i], heap[indexOfMaxOrMin]) < 0) {
                 //indexOfMaxOrMin = i;
             //}
-        }
-        return indexOfMaxOrMin;
+        //return indexOfMaxOrMin;
 
-        //int maxOrMin = kChild(index, 1);
-        //int k=2;
-        //int childCompare = kChild(index, k);
-        //while (k<=d && childCompare<nelems) {
-            //if (compare )
+        int maxOrMin = kChild(j, 1);
+        int k=2;
+        int childCompare = kChild(j, k);
+        while (k<=d && childCompare<nelems) {
+            if (compare(heap[childCompare], heap[maxOrMin]) > 0) {
+                maxOrMin = childCompare;
+            }
+            k++;
+            childCompare = kChild(j, k);
+        }
+        return maxOrMin;
         //}
     }
+
+    private int kChild(int index, int k) {
+        return d*index + k;
+    }
+
 
 }
