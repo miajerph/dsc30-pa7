@@ -8,17 +8,19 @@ class dHeapTester {
     @Test
     public void constructor1Test() {
         dHeap testHeap = new dHeap();
-        assertEquals(2, testHeap.d);
-        assertEquals(10, testHeap.heapSize);
-        assertTrue(testHeap.isMaxHeap);
+        assertEquals(0, testHeap.size());
+        testHeap.add(1);
+        assertEquals(1, testHeap.element());
+        assertEquals(1, testHeap.size());
     }
 
     @Test
     public void constructor2Test() {
         dHeap testHeap = new dHeap(5);
-        assertEquals(2, testHeap.d);
-        assertEquals(5, testHeap.heapSize);
-        assertTrue(testHeap.isMaxHeap);
+        assertEquals(0, testHeap.size());
+        testHeap.add(1);
+        assertEquals(1, testHeap.element());
+        assertEquals(1, testHeap.size());
 
     }
 
@@ -28,9 +30,9 @@ class dHeapTester {
         testHeap.add(8);
         testHeap.add(5);
         testHeap.add(9);
-        assertEquals(3, testHeap.d);
-        assertEquals(15, testHeap.heapSize);
-        assertFalse(testHeap.isMaxHeap);
+        assertEquals(3, testHeap.size());
+        assertEquals(5, testHeap.remove());
+        assertEquals(2, testHeap.size());
     }
 
     @Test
@@ -78,8 +80,12 @@ class dHeapTester {
         testHeap.add(1);
         testHeap.clear();
         assertEquals(0, testHeap.size());
-        assertEquals(testHeap.heapSize, 15);
-        assertTrue(testHeap.isMaxHeap);
+        assertThrows(NoSuchElementException.class, ()-> {
+            testHeap.element();
+        });
+        assertThrows(NoSuchElementException.class, ()-> {
+            testHeap.remove();
+        });
     }
 
     @Test
