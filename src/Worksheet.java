@@ -11,7 +11,7 @@ public class Worksheet {
         /*
         TODO: replace the values with the heap's array representations
          */
-        int[] output =  new int[]{99, 94, 68, 59, 83, 13, 37, 12, 44, 43, 71, 3};
+        int[] output = new int[]{99, 94, 68, 59, 83, 13, 37, 12, 44, 43, 71, 3};
         return output;
     }
 

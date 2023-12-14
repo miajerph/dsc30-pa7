@@ -39,7 +39,6 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     @SuppressWarnings("unchecked")
     public dHeap(int heapSize) {
         this(2, heapSize, true);
-
     }
 
     /**
@@ -54,10 +53,10 @@ public class dHeap<T extends Comparable<? super T>> implements HeapInterface<T> 
     @SuppressWarnings("unchecked")
     public dHeap(int d, int heapSize, boolean isMaxHeap) throws IllegalArgumentException {
         if (d<1) {throw new IllegalArgumentException();}
-        this.heap = (T[]) new Comparable[heapSize];
+        heap = (T[]) new Comparable[heapSize];
         this.d = d;
         this.isMaxHeap = isMaxHeap;
-        this.nelems= 0;
+        nelems= 0;
         this.heapSize = heapSize;
     }
 
